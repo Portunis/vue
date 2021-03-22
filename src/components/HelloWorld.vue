@@ -1,5 +1,10 @@
 <template>
   <div class="nav-bar"></div>
+  <div class="cart">
+    <p>Cart({{ cart }})</p>
+    <button v-if="cart >= 1" @click="delToCart">Удалить один товар </button>
+    <button v-if="cart >= 1"  @click="delAllCart">Очистить корзину </button>
+  </div>
 
   <div class="product-display">
     <div class="product-container">
@@ -13,9 +18,12 @@
         <div class="textcols">
           <div class="textcols-item">
             <h2>Color</h2>
-            <ul v-for="variant in variants" :key="variant.id">
-              <li>{{ variant.color }}</li>
-            </ul>
+            <div v-for="variant in variants" :key="variant.id">
+              <p @mouseover="updateProduct(variant.image)">
+                {{ variant.color }}
+              </p>
+            </div>
+
           </div>
           <div class="textcols-item">
             <h2>Details</h2>
@@ -31,11 +39,10 @@
           </div>
         </div>
         <p>{{ description }}</p>
-        <span v-if="inSale">Купить со скидкой {{ sale }}</span>
-        <p v-else>Купить</p><br>
+        <button v-if="inSale" @click="addToCart">Купить со скидкой {{ sale }} </button>
+        <button v-else @click="addToCart">Add to cart</button>
         <button :href="link">More products like this</button>
       </div>
-
     </div>
   </div>
 </template>
@@ -61,14 +68,32 @@ export default {
         {
           id: 2234,
           color: 'green',
+          image: 'https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg',
         },
         {
           id: 2235,
           color: 'blue',
+          image: 'https://www.vuemastery.com/images/challenges/vmSocks-blue-onWhite.jpg',
         },
       ],
 
+      cart: 0,
+
     };
+  },
+  methods: {
+    addToCart() {
+      this.cart += 1;
+    },
+    delToCart() {
+      this.cart -= 1;
+    },
+    delAllCart() {
+      this.cart = 0;
+    },
+    updateProduct(variantImage) {
+      this.image = variantImage;
+    },
   },
 };
 
