@@ -1,9 +1,10 @@
 <template>
+  <!-- eslint-disable-next-line vue/max-attributes-per-line -->
   <div class="nav-bar"></div>
   <div class="cart">
     <p>Cart({{ cart }})</p>
-    <button v-if="cart >= 1" @click="delToCart">Удалить один товар </button>
-    <button v-if="cart >= 1"  @click="delAllCart">Очистить корзину </button>
+    <button v-if="cart >= 1" @click="clearToCart">Удалить один товар </button>
+    <button v-if="cart >= 1"  @click="clearAllCart">Очистить корзину </button>
   </div>
 
   <div class="product-display">
@@ -11,7 +12,7 @@
       <div class="product-image">
         <img :src="image">
         <p v-if="inStock">In Stock</p>
-        <p v-else>Out of Stock</p>
+        <p v-else :class="{ textdecor: !inStock}">Out of Stock</p>
       </div>
       <div class="product-info">
         <h1>{{ product }}</h1>
@@ -39,8 +40,14 @@
           </div>
         </div>
         <p>{{ description }}</p>
-        <button v-if="inSale" @click="addToCart">Купить со скидкой {{ sale }} </button>
-        <button v-else @click="addToCart">Add to cart</button>
+        <button v-if="inSale"
+                @click="addToCart"
+                :disabled="!inStock"
+                :class="{ disabledButton: !inStock }"
+               >
+          Купить со скидкой {{ sale }}
+        </button>
+        <button v-else @click="addToCart" :disabled="!inStock">Add to cart</button>
         <button :href="link">More products like this</button>
       </div>
     </div>
@@ -61,7 +68,7 @@ export default {
       image: 'https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg',
       altText: 'A pair of socks',
       link: 'https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks',
-      inStock: true,
+      inStock: false,
       inSale: true,
       sale: '50%',
       variants: [
@@ -85,10 +92,10 @@ export default {
     addToCart() {
       this.cart += 1;
     },
-    delToCart() {
+    clearToCart() {
       this.cart -= 1;
     },
-    delAllCart() {
+    clearAllCart() {
       this.cart = 0;
     },
     updateProduct(variantImage) {

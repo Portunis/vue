@@ -215,4 +215,7 @@ ul {
 .textcols .textcols-item:first-child {
   margin-right: 4%;
 }
+.textdecor{
+  text-decoration: line-through;
+}
 </style>
