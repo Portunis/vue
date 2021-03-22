@@ -1,5 +1,4 @@
 <template>
-
   <HelloWorld />
 </template>
 
@@ -203,5 +202,17 @@ ul {
   .review-form {
     width: 90%;
   }
+}
+.textcols {
+  white-space: nowrap;
+}
+.textcols-item {
+  white-space: normal;
+  display: inline-block;
+  width: 20%;
+  vertical-align: top;
+}
+.textcols .textcols-item:first-child {
+  margin-right: 4%;
 }
 </style>

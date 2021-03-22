@@ -10,12 +10,32 @@
       </div>
       <div class="product-info">
         <h1>{{ product }}</h1>
-        <span v-if="inSale">Купить со скидкой {{ sale }}</span>
-        <p v-else>Купить</p>
+        <div class="textcols">
+          <div class="textcols-item">
+            <h2>Color</h2>
+            <ul v-for="variant in variants" :key="variant.id">
+              <li>{{ variant.color }}</li>
+            </ul>
+          </div>
+          <div class="textcols-item">
+            <h2>Details</h2>
+            <ul>
+              <li v-for="detail in details" :key="detail.id">{{ detail }}</li>
+            </ul>
+          </div>
+          <div class="textcols-item">
+            <h2>Sizes</h2>
+            <ul>
+              <li v-for="size in sizes" :key="size.id">{{ size }}</li>
+            </ul>
+          </div>
+        </div>
         <p>{{ description }}</p>
+        <span v-if="inSale">Купить со скидкой {{ sale }}</span>
+        <p v-else>Купить</p><br>
         <button :href="link">More products like this</button>
-
       </div>
+
     </div>
   </div>
 </template>
@@ -27,6 +47,8 @@ export default {
   },
   data() {
     return {
+      details: ['50% cotton', '30% wool', '20% polyester'],
+      sizes: ['S', 'M', 'L', 'XL'],
       product: 'Socks',
       description: 'A pair of warm fuzzy socks',
       image: 'https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg',
@@ -35,6 +57,17 @@ export default {
       inStock: true,
       inSale: true,
       sale: '50%',
+      variants: [
+        {
+          id: 2234,
+          color: 'green',
+        },
+        {
+          id: 2235,
+          color: 'blue',
+        },
+      ],
+
     };
   },
 };
