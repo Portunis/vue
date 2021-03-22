@@ -1,14 +1,31 @@
 <template>
-  <HelloWorld />
+  <div class="nav-bar"></div>
+  <ProductComponent />
+  <product :premium="premium"></product>
+  <HelloWorld></HelloWorld>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue';
+import ProductComponent from './components/ProductComponent.vue';
 
 export default {
   name: 'App',
   components: {
     HelloWorld,
+    ProductComponent,
+  },
+  props: {
+    premium: {
+      type: Boolean,
+      required: true,
+    },
+    shipping() {
+      if (this.premium) {
+        return 'Free';
+      }
+      return 2.99;
+    },
   },
 };
 </script>
@@ -56,7 +73,7 @@ body {
   box-shadow: 2px 15px -12px rgba(0, 0, 0, 0.57);
 }
 
-.color-circle {
+.color-box {
   width: 50px;
   height: 50px;
   margin-top: 8px;

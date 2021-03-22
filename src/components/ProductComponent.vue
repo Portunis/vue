@@ -1,11 +1,19 @@
 <template>
   <!-- eslint-disable-next-line vue/max-attributes-per-line -->
+  <div class="cart">
+    <p>User is premium: {{ premium }}</p>
+    <p>Cart({{ cart }})</p>
+    <button v-if="cart >= 1" @click="clearToCart">Удалить один товар </button>
+    <button v-if="cart >= 1"  @click="clearAllCart">Очистить корзину </button>
+  </div>
+
   <div class="product-display">
     <div class="product-container">
       <div class="product-image">
         <img :src="image" alt="image">
         <p v-if="inStock">In Stock</p>
         <p v-else :class="{ textdecor: !inStock}">Out of Stock</p>
+        <p>Shipping: {{ shipping }}</p>
       </div>
       <div class="product-info">
         <h1>{{ title }}</h1>
@@ -38,7 +46,7 @@
                 @click="addToCart"
                 :disabled="!inStock"
                 :class="{ disabledButton: !inStock }"
-               >
+        >
           Купить со скидкой {{ sale }}
         </button>
         <button v-else @click="addToCart" :disabled="!inStock">Add to cart</button><br><br>
@@ -50,7 +58,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'ProductComponent',
   components: {
   },
   data() {
@@ -64,7 +72,7 @@ export default {
       altText: 'A pair of socks',
       link: 'https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks',
       inStock: true,
-      inSale: true,
+      inSale: false,
       sale: '50%',
       variants: [
         {
@@ -104,8 +112,11 @@ export default {
     title() {
       return `${this.brand} ${this.product}`;
     },
+
   },
+
 };
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
